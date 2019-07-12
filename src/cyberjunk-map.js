@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaGlobe, FaRocket, FaQuestion, FaSun, FaCity, FaFire, FaBook, FaWarehouse, FaShip } from 'react-icons/fa';
+import { FaGlobe, FaRocket, FaQuestion, FaSun, FaCity, FaFire, FaBook, FaWarehouse, FaShip, FaLock } from 'react-icons/fa';
 const Icons = {
     FaWarehouse: FaWarehouse,
     FaRocket: FaRocket,
@@ -11,8 +11,8 @@ const Icons = {
     FaShip: FaShip,
 }
 const DEFAULT_X = 5;
-const DEFAULT_Y = 20;
-
+const DEFAULT_Y = 10;
+const DEFAULTS_PER_ROW = 6;
 
 export class CyberjunkMap extends React.Component {
     constructor(props) {
@@ -44,13 +44,13 @@ export class CyberjunkMap extends React.Component {
         return location.to.map((clickable, index) => {
             const clickableLocation = locationsByName[clickable.name] && { ...locationsByName[clickable.name], name: clickable.name };
             const unavailable = !clickableLocation || clickableLocation.hidden || clickableLocation.locked;
-
+            const style = { left: ((clickable.x || (index % DEFAULTS_PER_ROW + 1) * DEFAULT_X) / 100) * image.width, top: clickable.y ? clickable.y / 100 * image.height : (DEFAULT_Y * Math.floor(index / DEFAULTS_PER_ROW) / 100 * image.height) + 40 }
             return unavailable ? (
-                <div className="clickable disabled" style={{ left: ((clickable.x || (index + 1) * DEFAULT_X) / 100) * image.width, top: ((clickable.y || DEFAULT_Y) / 100) * image.height }}>
-                    <FaQuestion />
+                <div className="clickable disabled" style={style}>
+                    {clickableLocation && clickableLocation.locked ? <FaLock /> : <FaQuestion />}
                     <span className="clickable-name">{clickableLocation && clickableLocation.locked ? clickableLocation.name : '???'}</span>
-                </div>) : (
-                    <div className="clickable" style={{ left: ((clickable.x || (index + 1) * DEFAULT_X) / 100) * image.width, top: ((clickable.y || DEFAULT_Y) / 100) * image.height }}
+                </div >) : (
+                    <div className="clickable" style={style}
                         onClick={() => this.setState({ loading: clickableLocation.image !== location.image, location: clickableLocation })}>
                         {React.createElement(Icons[clickableLocation.icon] || Icons.FaGlobe)}
                         <span className="clickable-name">{clickable.name}</span>
