@@ -1,9 +1,19 @@
 export default {
     "Deep Space": {
         icon: "FaRocket",
-        to: [{ name: "Sol" }, { name: "Miskatonic" }, {
+        image: 'deep-space',
+        to: [{ x: 30, y: 80, name: "Sol" }, { x: 22, y: 78, name: "Miskatonic" }, { x: 9, y: 68, name: "Tarantin" }, {
             x: 90, y: 90, name: "Ship Dossier"
         },]
+    },
+    "Tarantin": {
+        icon: "FaSun",
+        to: [{
+            y: 90, name: "Deep Space"
+        },
+        {
+            y: 90, name: "Ship Dossier"
+        }],
     },
     "PostPluto": {
         image: "PostPluto",

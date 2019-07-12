@@ -51,7 +51,7 @@ export class CyberjunkMap extends React.Component {
                     <span className="clickable-name">{clickableLocation && clickableLocation.locked ? clickableLocation.name : '???'}</span>
                 </div>) : (
                     <div className="clickable" style={{ left: ((clickable.x || (index + 1) * DEFAULT_X) / 100) * image.width, top: ((clickable.y || DEFAULT_Y) / 100) * image.height }}
-                        onClick={() => this.setState({ loading: true, location: clickableLocation })}>
+                        onClick={() => this.setState({ loading: clickableLocation.image !== location.image, location: clickableLocation })}>
                         {React.createElement(Icons[clickableLocation.icon] || Icons.FaGlobe)}
                         <span className="clickable-name">{clickable.name}</span>
                     </div>
