@@ -22,6 +22,7 @@ export class CyberjunkMap extends React.Component {
         this.state = {
             locations,
             location: locations[0],
+            loading: false,
         };
     }
     updateDimensions = () => {
@@ -50,7 +51,7 @@ export class CyberjunkMap extends React.Component {
                     <span className="clickable-name">{clickableLocation && clickableLocation.locked ? clickableLocation.name : '???'}</span>
                 </div>) : (
                     <div className="clickable" style={{ left: ((clickable.x || (index + 1) * DEFAULT_X) / 100) * image.width, top: ((clickable.y || DEFAULT_Y) / 100) * image.height }}
-                        onClick={() => this.setState({ location: clickableLocation })}>
+                        onClick={() => this.setState({ loading: true, location: clickableLocation })}>
                         {React.createElement(Icons[clickableLocation.icon] || Icons.FaGlobe)}
                         <span className="clickable-name">{clickable.name}</span>
                     </div>
@@ -60,13 +61,12 @@ export class CyberjunkMap extends React.Component {
     }
     render() {
         if (!this.state) return '';
-        const { location } = this.state;
+        const { location, loading } = this.state;
         return (
             <div className='location' >
-                <h1>{location.name}</h1>
-                <img onLoad={this.updateDimensions} id="location-img" src={`./pics/${(location.image || 'blank')}.png`} />
-                {this.renderClickables()
-                }
+                <h1>{loading ? 'Loading...' : location.name}</h1>
+                <img src={`./pics/${(location.image || 'blank')}.png`} onLoad={() => this.setState({ loading: false })} id="location-img" />
+                {loading ? '' : this.renderClickables()}
             </div >
         );
     }
