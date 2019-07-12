@@ -21,7 +21,7 @@ export class CyberjunkMap extends React.Component {
         const locations = Object.keys(locationsByName).map(name => ({ ...locationsByName[name], name }));
         this.state = {
             locations,
-            location: locationsByName.Miskatonic,
+            location: locations[0],
         };
     }
     updateDimensions = () => {
